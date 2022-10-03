@@ -1,20 +1,30 @@
-import React from 'react'
-import './App.css'
-import ListOfGifs from './components/ListOfGifs'
-
 import { Link, Route } from 'wouter'
+
+import './App.css'
+import logo from './logo.svg'
+import SearchResults from './pages/SearchResults'
+import Details from './pages/Details/index.js'
+import Home from './pages/Home'
+import StaticContext from './context/StaticContext'
+import { GifsContext } from './context/GifsContext'
 
 function App() {
   return (
-    <div className="App">
-      <section className="App-content">
-      <h1>Giffy React App</h1>
-      <Link to='/gif/panda'>Gifs de pandas</Link>
-      <Link to='/gif/mapache'>Gifs de mapaches</Link>
-      <Link to='/gif/españa'>Gifs de España</Link>
-      <Route path='/gif/:keyword' component={ListOfGifs}/>
-      </section>
-    </div>
+    <StaticContext.Provider value={{ name: 'Pedro S.', learningReact: true }}>
+      <div className="App">
+        <section className="App-content">
+          <Link className="nav" to="/">
+            <img src={logo} className="App-logo" alt="logo" />
+            <h1>Giffy React App</h1>
+          </Link>
+          <GifsContext>
+            <Route component={Home} path="/" />
+            <Route component={SearchResults} path="/search/:keyword" />
+            <Route component={Details} path="/gif/:id" />
+          </GifsContext>
+        </section>
+      </div>
+    </StaticContext.Provider>
   )
 }
 
